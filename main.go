@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"sort"
 	"strings"
 	"time"
 
@@ -66,14 +65,15 @@ func dumpKeyspace(keyspace Keyspace) {
 		dumpKeyspaceType(t)
 	}
 	tables := getTables(keyspace)
-	for _, table := range tables {
-		dumpKeyspaceTablesDef(keyspace, table)
-	}
+	//for _, table := range tables {
+	//dumpKeyspaceTablesDef(keyspace, table)
+	//}
 	for _, table := range tables {
 		dumpDataTable(keyspace, table)
 	}
 }
 
+/*
 func dumpKeyspaceTablesDef(keyspace Keyspace, table Table) {
 	for c, column := range table.Columns {
 		if column.Kind == "clustering" {
@@ -112,19 +112,19 @@ func dumpKeyspaceTablesDef(keyspace Keyspace, table Table) {
 		WITH = append(WITH, "CLUSTERING ORDER BY ("+column.Column_name+" "+column.Clustering_order+")")
 	}
 	WITH = append(WITH, fmt.Sprintf("bloom_filter_fp_chance      = %f", table.Bloom_filter_fp_chance))
-	WITH = append(WITH, fmt.Sprintf("crc_check_chance            = %f", table.Crc_check_chance))
-	WITH = append(WITH, fmt.Sprintf("dclocal_read_repair_chance  = %f", table.Dclocal_read_repair_chance))
-	WITH = append(WITH, fmt.Sprintf("default_time_to_live        = %d", table.Default_time_to_live))
-	WITH = append(WITH, fmt.Sprintf("gc_grace_seconds            = %d", table.Gc_grace_seconds))
-	WITH = append(WITH, fmt.Sprintf("max_index_interval          = %d", table.Max_index_interval))
-	WITH = append(WITH, fmt.Sprintf("memtable_flush_period_in_ms = %d", table.Memtable_flush_period_in_ms))
-	WITH = append(WITH, fmt.Sprintf("min_index_interval          = %d", table.Min_index_interval))
-	WITH = append(WITH, fmt.Sprintf("read_repair_chance          = %f", table.Read_repair_chance))
-	WITH = append(WITH, fmt.Sprintf("speculative_retry           = '%s'", table.Speculative_retry))
-	WITH = append(WITH, fmt.Sprintf("caching                     = %s", StringMapToCassandra(table.Caching)))
+	//WITH = append(WITH, fmt.Sprintf("crc_check_chance            = %f", table.Crc_check_chance))
+	//WITH = append(WITH, fmt.Sprintf("dclocal_read_repair_chance  = %f", table.Dclocal_read_repair_chance))
+	//WITH = append(WITH, fmt.Sprintf("default_time_to_live        = %d", table.Default_time_to_live))
+	//WITH = append(WITH, fmt.Sprintf("gc_grace_seconds            = %d", table.Gc_grace_seconds))
+	//WITH = append(WITH, fmt.Sprintf("max_index_interval          = %d", table.Max_index_interval))
+	//WITH = append(WITH, fmt.Sprintf("memtable_flush_period_in_ms = %d", table.Memtable_flush_period_in_ms))
+	//WITH = append(WITH, fmt.Sprintf("min_index_interval          = %d", table.Min_index_interval))
+	//WITH = append(WITH, fmt.Sprintf("read_repair_chance          = %f", table.Read_repair_chance))
+	//WITH = append(WITH, fmt.Sprintf("speculative_retry           = '%s'", table.Speculative_retry))
+	WITH = append(WITH, fmt.Sprintf("caching                     = %s", table.Caching))
 	WITH = append(WITH, fmt.Sprintf("comment                     = '%s'", table.Comment))
-	WITH = append(WITH, fmt.Sprintf("compression                 = %s", StringMapToCassandra(table.Compression)))
-	WITH = append(WITH, fmt.Sprintf("compaction                  = %s", StringMapToCassandra(table.Compaction)))
+	//WITH = append(WITH, fmt.Sprintf("compression                 = %s", StringMapToCassandra(table.Compression)))
+	//WITH = append(WITH, fmt.Sprintf("compaction                  = %s", StringMapToCassandra(table.Compaction)))
 	for k, v := range WITH {
 		if k > 0 {
 			fmt.Print("\n\tAND ")
@@ -136,7 +136,7 @@ func dumpKeyspaceTablesDef(keyspace Keyspace, table Table) {
 	fmt.Println(";")
 	fmt.Println("")
 }
-
+*/
 func dumpKeyspaceType(t Type) {
 	fmt.Println("CREATE TYPE", t.Name, "(")
 	for k, _ := range t.FieldNames {

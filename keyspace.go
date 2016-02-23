@@ -1,22 +1,24 @@
 package main
 
 type Keyspace struct {
-	Keyspace_name  string
-	Durable_writes bool
-	Replication    map[string]string
+	Keyspace_name    string
+	Durable_writes   bool
+	Strategy_class   string
+	Strategy_options string
 }
 
 func getKeyspaces(include []string, exclude []string) []Keyspace {
 	iter := con.Query(`SELECT
 				keyspace_name,
 				durable_writes,
-				replication
+				strategy_class,
+				strategy_options
 			   FROM
-				system_schema.keyspaces`).Iter()
+				system.schema_keyspaces`).Iter()
 	var keyspaces []Keyspace
 	var keyspace Keyspace
 ksloop:
-	for iter.Scan(&keyspace.Keyspace_name, &keyspace.Durable_writes, &keyspace.Replication) {
+	for iter.Scan(&keyspace.Keyspace_name, &keyspace.Durable_writes, &keyspace.Strategy_class, &keyspace.Strategy_options) {
 		if len(include) > 0 {
 			keep := false
 			for _, i := range include {

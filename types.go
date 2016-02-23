@@ -11,7 +11,7 @@ func getTypes(keyspace Keyspace) []Type {
 				type_name,
 				field_names,
 				field_types
-			FROM system_schema.types
+			FROM system.schema_usertypes
 			WHERE keyspace_name = ?`, keyspace.Keyspace_name).Iter()
 	var types []Type
 	var t Type
