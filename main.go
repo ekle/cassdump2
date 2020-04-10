@@ -43,7 +43,6 @@ func connect(ip, user, pass string) (*gocql.Session, error) {
 	cluster.Consistency = gocql.Quorum
 	cluster.ProtoVersion = 3
 	cluster.RetryPolicy = &gocql.SimpleRetryPolicy{NumRetries: 3}
-	cluster.Discovery = gocql.DiscoveryConfig{}
 	cluster.NumConns = 1
 	cluster.SocketKeepalive = time.Second * 10
 
